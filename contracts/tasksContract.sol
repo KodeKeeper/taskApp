@@ -13,12 +13,20 @@ struct Task {
 }
 mapping (uint256 => Task) public tasks;
 
+constructor() {
+    createTask("00000000", "Tarea Genesis");
+}
+
 function createTask(string memory _title, string memory _description) public {
     tasks[taskCounter] = Task(taskCounter, _title, _description, false, block.timestamp);
     taskCounter++;
 }
 
-function toggleDone () public {
+function toggleDone (uint _id) public {
+    Task memory _task = tasks[_id];
+    _task.done = !_task.done;
+    tasks[_id] = _task;
 }
+
 
 }
